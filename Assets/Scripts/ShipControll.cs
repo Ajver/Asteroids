@@ -15,6 +15,8 @@ public class ShipControll : MonoBehaviour
     public bool controlEnginesOn = false;
 
     public ParticleSystem engineParticles;
+    public ParticleSystem LeftRCSParticles;
+    public ParticleSystem RightRCSParticles;
 
     private Rigidbody2D rigidbody;
     private EmissionModule emission;
@@ -53,10 +55,31 @@ public class ShipControll : MonoBehaviour
         float rotateDir = Input.GetAxisRaw("Horizontal");
         if (controlEnginesOn = (rotateDir != 0.0f))
         {
+            int emit = 2;
+            if(rotateDir > 0)
+            {
+                LeftRCSParticles.Emit(emit);
+            }
+            else
+            {
+                RightRCSParticles.Emit(emit);
+            }
+
             rigidbody.angularVelocity -= rotateDir * rotateAcceleration * Time.deltaTime; 
         }
         else
         {
+            int emit = 5;
+            float margin = 2.0f;
+            if (rigidbody.angularVelocity > margin)
+            {
+                LeftRCSParticles.Emit(emit);
+            }
+            else if(rigidbody.angularVelocity < -margin)
+            {
+                RightRCSParticles.Emit(emit);
+            }
+
             rigidbody.angularVelocity *= rotateDamping;
         }
     }
