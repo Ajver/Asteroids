@@ -22,6 +22,9 @@ public class UIPanel : MonoBehaviour
 
     void Update()
     {
+        if (!MainClass.isGameRunning)
+            return;
+
         Rigidbody2D shipRB = ship.GetComponent<Rigidbody2D>();
         float velocity = (int)(shipRB.velocity.magnitude * 100.0f);
         velocityText.text = ""+velocity;

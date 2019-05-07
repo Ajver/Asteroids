@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class MainClass : MonoBehaviour
 {
@@ -9,6 +9,17 @@ public class MainClass : MonoBehaviour
 
     public static float mapWidthUnits;
     public static float mapHeightUnits;
+
+    public static bool isGameRunning = false;
+    
+    private Animator animator;
+
+    private void Start()
+    {
+        isGameRunning = true;
+        animator = GetComponent<Animator>();
+        ShipControll.OnGameOver += GameOver;
+    }
 
     void Update()
     {
@@ -19,4 +30,13 @@ public class MainClass : MonoBehaviour
         mapHeightUnits = screenHeightUnits;
     }
     
+    public void GameOver()
+    {
+        isGameRunning = false;
+        SoundManager.playSound(SoundManager.Sound.DESTROY);
+        CameraShaker.Instance.ShakeOnce(4.0f, 4.0f, .1f, 1.0f);
+        animator.SetTrigger("GameOver");
+    }
+    
+
 }

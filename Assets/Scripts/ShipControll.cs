@@ -6,6 +6,9 @@ using static UnityEngine.ParticleSystem;
 public class ShipControll : MonoBehaviour
 {
 
+    public delegate void GameOverAction();
+    public static event GameOverAction OnGameOver;
+
     public float acceleration;
     public float rotateAcceleration;
     public float damping;
@@ -18,14 +21,16 @@ public class ShipControll : MonoBehaviour
     public ParticleSystem LeftRCSParticles;
     public ParticleSystem RightRCSParticles;
 
-    private Rigidbody2D rigidbody;
-    private EmissionModule emission;
+    public SpriteRenderer sprite;
 
+    public ParticleSystem destroyParticles;
+    public ParticleSystem burnParticles;
+
+    private Rigidbody2D rigidbody;
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        emission = engineParticles.emission;
     }
     
     void Update()
@@ -40,6 +45,10 @@ public class ShipControll : MonoBehaviour
         {
             Vector2 accVector = transform.up * acceleration * Time.deltaTime;
             rigidbody.velocity += accVector;
+
+            if(rigidbody.velocity.sqrMagnitude > 100)
+                rigidbody.velocity *= 0.95f;
+
             engineParticles.Emit(1);
             engineOn = true;
         }
@@ -56,14 +65,11 @@ public class ShipControll : MonoBehaviour
         if (controlEnginesOn = (rotateDir != 0.0f))
         {
             int emit = 2;
+
             if(rotateDir > 0)
-            {
                 LeftRCSParticles.Emit(emit);
-            }
             else
-            {
                 RightRCSParticles.Emit(emit);
-            }
 
             rigidbody.angularVelocity -= rotateDir * rotateAcceleration * Time.deltaTime; 
         }
@@ -71,14 +77,11 @@ public class ShipControll : MonoBehaviour
         {
             int emit = 5;
             float margin = 2.0f;
+
             if (rigidbody.angularVelocity > margin)
-            {
                 LeftRCSParticles.Emit(emit);
-            }
             else if(rigidbody.angularVelocity < -margin)
-            {
                 RightRCSParticles.Emit(emit);
-            }
 
             rigidbody.angularVelocity *= rotateDamping;
         }
@@ -88,9 +91,22 @@ public class ShipControll : MonoBehaviour
     {
         if(collision.tag == "Asteroid")
         {
-            // Game Over
-            SoundManager.playSound(SoundManager.Sound.DESTROY);
-            Debug.Log("GameOver");
+            gameOver();
         }
     }
+
+    void gameOver()
+    {
+        destroyParticles.Emit(100);
+        burnParticles.Emit(50);
+
+        OnGameOver();
+
+        sprite.enabled = false;
+        this.enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+
+        Destroy(this.gameObject, 0.3f);
+    }
+
 }
