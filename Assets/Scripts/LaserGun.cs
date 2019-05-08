@@ -14,6 +14,13 @@ public class LaserGun : MonoBehaviour
     
     private float nextFireTimer;
 
+    private bool isShipAlive = true;
+
+    private void Start()
+    {
+        ShipControll.OnGameOver += OnGameOver;
+    }
+
     void resetFireTimer()
     {
         nextFireTimer = fireRate;
@@ -21,14 +28,13 @@ public class LaserGun : MonoBehaviour
     
     void Update()
     {
+        if (!isShipAlive)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Space))
-        {
             startShoting();
-        }
         else if (Input.GetKeyUp(KeyCode.Space))
-        {
             stopShoting();
-        }
 
         processShoting();
     }
@@ -63,5 +69,10 @@ public class LaserGun : MonoBehaviour
     void stopShoting()
     {
         isShoting = false;
+    }
+
+    void OnGameOver()
+    {
+        isShipAlive = false;
     }
 }

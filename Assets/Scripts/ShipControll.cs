@@ -26,15 +26,21 @@ public class ShipControll : MonoBehaviour
     public ParticleSystem destroyParticles;
     public ParticleSystem burnParticles;
 
+    private bool isAlive = false;
+
     private Rigidbody2D rigidbody;
 
     private void Start()
     {
+        isAlive = true;
         rigidbody = GetComponent<Rigidbody2D>();
     }
     
     void Update()
     {
+        if (!isAlive)
+            return;
+
         processMoving();
         processRotating();
     }
@@ -97,6 +103,8 @@ public class ShipControll : MonoBehaviour
 
     void gameOver()
     {
+        isAlive = false;
+
         destroyParticles.Emit(100);
         burnParticles.Emit(50);
 

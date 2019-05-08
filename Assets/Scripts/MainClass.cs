@@ -11,7 +11,7 @@ public class MainClass : MonoBehaviour
     public static float mapHeightUnits;
 
     public static bool isGameRunning = false;
-    
+        
     private Animator animator;
 
     private void Start()
@@ -34,7 +34,7 @@ public class MainClass : MonoBehaviour
     {
         isGameRunning = false;
         SoundManager.playSound(SoundManager.Sound.DESTROY);
-        CameraShaker.Instance.ShakeOnce(4.0f, 4.0f, .1f, 1.0f);
+        CameraShaker.Instance.ShakeOnce(5.0f, 10.0f, .1f, 2.0f);
         animator.SetTrigger("GameOver");
     }
     

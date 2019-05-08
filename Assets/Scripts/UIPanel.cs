@@ -17,6 +17,7 @@ public class UIPanel : MonoBehaviour
    
     private void Start()
     {
+        ShipControll.OnGameOver += OnGameOver;
         Asteroid.OnDestroy += OnAsteroidDestroy;
     }
 
@@ -41,6 +42,14 @@ public class UIPanel : MonoBehaviour
     {
         Light light = img.GetComponent<Light>();
         light.turn(value);
+    }
+
+    public void OnGameOver()
+    {
+        velocityText.text = "?";
+        setLight(MainEnginesLight, false);
+        setLight(ControlEnginesLight, false);
+        setLight(LaserLight, false);
     }
 
     public void OnAsteroidDestroy()
