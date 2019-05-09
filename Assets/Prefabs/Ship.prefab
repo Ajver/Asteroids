@@ -9755,8 +9755,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 3
   rotateAcceleration: 800
-  damping: 0.95
-  rotateDamping: 0.9
+  damping: 1.8
+  rotateDamping: 3.5
   engineOn: 0
   controlEnginesOn: 0
   engineParticles: {fileID: 2025497255}

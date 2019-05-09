@@ -60,7 +60,7 @@ public class ShipControll : MonoBehaviour
         }
         else
         {
-            Vector2 dampingVel = rigidbody.velocity * (1.0f - damping);
+            Vector2 dampingVel = rigidbody.velocity * damping * Time.deltaTime;
             rigidbody.velocity -= dampingVel;
             engineOn = false;
         }
@@ -71,7 +71,7 @@ public class ShipControll : MonoBehaviour
         float rotateDir = Input.GetAxisRaw("Horizontal");
         if (controlEnginesOn = (rotateDir != 0.0f))
         {
-            int emit = 2;
+            int emit = (int)(120.0f * Time.deltaTime);
 
             if(rotateDir > 0)
                 LeftRCSParticles.Emit(emit);
@@ -82,7 +82,7 @@ public class ShipControll : MonoBehaviour
         }
         else
         {
-            int emit = 5;
+            int emit = (int)(300.0f * Time.deltaTime);
             float margin = 2.0f;
 
             if (rigidbody.angularVelocity > margin)
@@ -90,7 +90,8 @@ public class ShipControll : MonoBehaviour
             else if(rigidbody.angularVelocity < -margin)
                 RightRCSParticles.Emit(emit);
 
-            rigidbody.angularVelocity *= rotateDamping;
+            float dampingVel = rigidbody.angularVelocity * rotateDamping * Time.deltaTime;
+            rigidbody.angularVelocity -= dampingVel;
         }
     }
 
