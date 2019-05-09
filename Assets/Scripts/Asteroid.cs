@@ -72,9 +72,26 @@ public class Asteroid : MonoBehaviour
         if (!isAlive)
             return;
 
+        int force = 0;
+
         if (collider.tag == "Laser")
+            force = 1;
+
+        else if (collider.tag == "Rocket")
         {
-            if (--type == AsteroidType.DESTROYED)
+            RocketControl rc = collider.GetComponent<RocketControl>();
+
+            if (rc != null)
+                rc.Boom();
+
+            force = 3;
+        }
+
+        if (force > 0)
+        {
+            type = (AsteroidType)Mathf.Max((float)type-force, 0);
+
+            if (type == AsteroidType.DESTROYED)
             {
                 asteroidsCount--;
                 destroyParticles.Emit(30);
@@ -94,6 +111,17 @@ public class Asteroid : MonoBehaviour
         }
 
         setupByType();
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {        
+        foreach (ContactPoint2D p in collision.contacts)
+        {
+            boomParticles.transform.position = p.point;
+            boomParticles.Emit((int)(20.0f * collision.relativeVelocity.magnitude));
+        }
+
+        boomParticles.transform.position = Vector2.zero;
     }
 
 }

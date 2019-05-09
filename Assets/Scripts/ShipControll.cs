@@ -30,6 +30,8 @@ public class ShipControll : MonoBehaviour
 
     private Rigidbody2D rigidbody;
 
+    private bool godMode = false;
+
     private void Start()
     {
         isAlive = true;
@@ -38,6 +40,9 @@ public class ShipControll : MonoBehaviour
     
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+            godMode = !godMode;
+
         if (!isAlive)
             return;
 
@@ -97,14 +102,15 @@ public class ShipControll : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Asteroid")
-        {
+        if(collision.tag == "Asteroid" || collision.name == "BoomArea")
             gameOver();
-        }
     }
 
     void gameOver()
     {
+        if (godMode)
+            return;
+
         isAlive = false;
 
         destroyParticles.Emit(100);
@@ -114,7 +120,7 @@ public class ShipControll : MonoBehaviour
 
         sprite.enabled = false;
         this.enabled = false;
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<Rigidbody2D>().simulated = false;
 
         Destroy(this.gameObject, 0.3f);
     }
