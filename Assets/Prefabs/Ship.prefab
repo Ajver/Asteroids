@@ -9691,6 +9691,7 @@ GameObject:
   - component: {fileID: 3153389542390726591}
   - component: {fileID: 5706848982288135721}
   - component: {fileID: 8182020299081837929}
+  - component: {fileID: 3146555953878116546}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -9842,6 +9843,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3146555953878116546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533899331819156110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934c3080ab3f0c84dbf9352a8891e16c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 709768921606729861}
+  rocketPrefab: {fileID: 1907600400255573504, guid: 549026910d749a44a8ecd22ad93797e0,
+    type: 3}
+  rocketSpeed: 2
+  nextRocketWaitTime: 1
 --- !u!1 &8250178426268691530
 GameObject:
   m_ObjectHideFlags: 0
