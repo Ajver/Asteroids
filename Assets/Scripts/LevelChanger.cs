@@ -9,7 +9,15 @@ public class LevelChanger : MonoBehaviour
     public Animator animator;
 
     private string sceneToLoadName;
-    
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitGame();
+        }
+    }
+
     public void FadeToScene(string sceneName)
     {
         sceneToLoadName = sceneName;

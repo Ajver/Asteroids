@@ -60,7 +60,8 @@ public class ShipControll : MonoBehaviour
         }
         else
         {
-            rigidbody.velocity *= damping;
+            Vector2 dampingVel = rigidbody.velocity * (1.0f - damping);
+            rigidbody.velocity -= dampingVel;
             engineOn = false;
         }
     }
