@@ -9859,7 +9859,7 @@ MonoBehaviour:
   rocketPrefab: {fileID: 1907600400255573504, guid: 549026910d749a44a8ecd22ad93797e0,
     type: 3}
   rocketSpeed: 2
-  nextRocketWaitTime: 1
+  nextRocketWaitTime: 3
 --- !u!1 &8250178426268691530
 GameObject:
   m_ObjectHideFlags: 0
