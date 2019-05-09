@@ -71,7 +71,7 @@ public class ShipControll : MonoBehaviour
         float rotateDir = Input.GetAxisRaw("Horizontal");
         if (controlEnginesOn = (rotateDir != 0.0f))
         {
-            int emit = (int)(120.0f * Time.deltaTime);
+            int emit = 2;
 
             if(rotateDir > 0)
                 LeftRCSParticles.Emit(emit);
@@ -82,7 +82,7 @@ public class ShipControll : MonoBehaviour
         }
         else
         {
-            int emit = (int)(300.0f * Time.deltaTime);
+            int emit = 5;
             float margin = 2.0f;
 
             if (rigidbody.angularVelocity > margin)
